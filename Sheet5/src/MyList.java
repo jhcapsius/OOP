@@ -9,15 +9,15 @@
 package src;
 
 public class MyList {
-    private int[] array= {1,2};
+    private int[] array;
     private int countDuplicates;
 
     /**
      * Creates an MyList-object with an empty list
      */
-    /*public MyList(){
+    public MyList(){
         array = new int[0];
-    }*/
+    }
 
     /**
      * calls helper function to add an element
@@ -37,9 +37,10 @@ public class MyList {
      */
 
     private int[] addToListFunction(int index, int item){    
-        int[] temp = new int[this.array.length + 1];    
+        int[] temp = new int[this.array.length + 1]; 
+
         //if the index is bigger that arraylength or smaller than 0, it prints an error and return the original array
-        if(index > this.array.length || index < 0){
+        if(index > temp.length || index < 0){
             System.out.println("Index out of bounce.\n");
             return this.array;
         
@@ -156,23 +157,22 @@ public class MyList {
         int k, j;
         temp = sort(temp);
         for (int i = 0; i < temp.length - 2; i++) {
- 
-            // To find the other two elements, start two index variables
-            // from two corners of the array and move them toward each
-            // other
-            k = i + 1; // index of the first element in the remaining elements
-            j = temp.length - 1; // index of the last element
+            k = i + 1;
+            j = temp.length - 1; 
             while (k < j) {
                 if (temp[i] + temp[k] + temp[j] == zahl) {
                     System.out.print("Triplets equal " + zahl + ": [" + temp[i] + ", " + temp[k] + ", " + temp[j] + "]\n");
                     k++;
                     j--;
                 }
-                else if (temp[i] + temp[k] + temp[j] < zahl)
+                else if (temp[i] + temp[k] + temp[j] < zahl){
                     k++;
+                }
+                    
  
-                else // A[i] + A[l] + A[r] > sum
+                else{
                     j--;
+                }        
             }
         }
     }
@@ -216,11 +216,5 @@ public class MyList {
     
     public int getArrayLength(){
         return this.array.length;
-    }
-
-    public static void main(String[] args) {
-        MyList mylist = new MyList();
-        mylist.addToList(2, 3);
-        mylist.printArray();
     }
 }
