@@ -180,7 +180,10 @@ ________________________________________________________________________________
 Implement a class LinearAlgebra with following methods:
 * print a vektor with *void ausgabe(double a[]). It have to look like this: [1 2 3 4]
 * print a matrix with *void ausgabe(double a [][]). It have to look like this:  
-[  1 2 3 4  1 2 3 4  ]
+[
+1 2 3 4  
+1 2 3 4  
+]
 * multiply two vektors pairwise with the method *double[] prodkt(double a[], double b[])
 * multiply a mxn matrix with a nx1 vektor with the method *double[] produkt(double a[][], double a[])
 * addition of two matrices pairwise with the method *double[] add(double a[][], double b[][])
