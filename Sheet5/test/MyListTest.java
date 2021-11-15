@@ -67,8 +67,6 @@ public class MyListTest {
         System.out.println("After remove");
         myList.printArray();
 
-        
-
         //get triplets that equals given number test
         int[] array = {21,12,3,27,4,6,9,1,2,8,7,10,11,15,14,0};
         myList.printArray();
