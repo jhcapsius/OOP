@@ -5,7 +5,6 @@
  * @version 1.0
  */
 
-
 public class LinearAlgebra {
     private double puffer;
     private double[] result_product_vek;
@@ -33,9 +32,9 @@ public class LinearAlgebra {
      * multiplies a matrix component by component with a vector
      * @param a matrix 1
      * @param b vektor 1
-     * @return null, if the length foes no match or an vector-array with the new values
+     * @return null, if the length does not match or an vector-array with the new values
      */
-    //produkt einer m x n Matrix mit einem nx1-Vektor
+    
     public double[] produkt(double a[][], double b[]){
         if(a[0].length != b.length){
             return null;
