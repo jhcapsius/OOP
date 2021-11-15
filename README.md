@@ -226,7 +226,7 @@ Given is a binary image with the two colors black and white. The pixels are in a
 Implement a methode *int[][] zoom(int[][] input, int[] f)*. Input is the picture and f the zoom factor. In addition, implement a method to print the enlarged image.
 
 Example
-'''
+```
         f = 2       f = 3
 1 0     1 1 0 0     1 1 1 0 0 0
 0 0     1 1 0 0     1 1 1 0 0 0
@@ -234,7 +234,7 @@ Example
         0 0 0 0     0 0 0 0 0 0
                     0 0 0 0 0 0
                     0 0 0 0 0 0
-'''
+```
 
 Notes:
 * only nxn matrices are allowed
