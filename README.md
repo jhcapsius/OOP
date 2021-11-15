@@ -227,13 +227,13 @@ Implement a methode *int[][] zoom(int[][] input, int[] f)*. Input is the picture
 
 Example
 ```
-        f = 2       f = 3
-1 0     1 1 0 0     1 1 1 0 0 0
-0 0     1 1 0 0     1 1 1 0 0 0
-        0 0 0 0     1 1 1 0 0 0
-        0 0 0 0     0 0 0 0 0 0
-                    0 0 0 0 0 0
-                    0 0 0 0 0 0
+Original        f = 2       f = 3
+1 0             1 1 0 0     1 1 1 0 0 0
+0 0             1 1 0 0     1 1 1 0 0 0
+                0 0 0 0     1 1 1 0 0 0
+                0 0 0 0     0 0 0 0 0 0
+                            0 0 0 0 0 0
+                            0 0 0 0 0 0
 ```
 
 Notes:
