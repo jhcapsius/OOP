@@ -1,6 +1,7 @@
 /**
  * The program checks if two passed arrays are identical. Two arrays are identical if they have the same length and the components match in pairs. 
  * The order of the values does not matter and duplicate values are also allowed. 
+ * 
  * @author Jan-Henrik Capsius
  * @version 1.0
  */
@@ -10,7 +11,6 @@ public class CompareArrays {
     private int b_length;
 
     /**
-     * 
      * @param a first array
      * @param b second array
      * @return if the arrays are identical, returns true, otherwise returns false 
