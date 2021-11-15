@@ -7,12 +7,13 @@
 ### Task 1 (a) a^b - Error in the program (Solution in Power.java)
 
 Given the following Java program, which contains some syntactical and content errors.
-Correct these errors, and implement the class and method correctly.Test your solution.
+Correct these errors, and implement the class and method correctly. Test your solution.
 Note: Pay attention not only to syntactic correctness, but also to semantic correctness. 
 I.e. make sure not only that the program can be executed, but also that the program does 
 what it is supposed to do (the calculation of a^b).
 
-```public Class Power{
+```
+public Class Power{
 
     public static void main(String [] args){
         integer a = 2
@@ -35,7 +36,7 @@ ________________________________________________________________________________
   
 ### Task 1 (b) Quadratic equation (Solution in CalcZeropoints.java)
 
-Write a method berechneNullstellen() that computes the zeros of the quadratic equation ax2+bx+c=0. 
+Write a method *berechneNullstellen()* that computes the zeros of the quadratic equation ax2+bx+c=0. 
 Output the solution to four decimal places in the console. The zeros are determined by the 
 following formula :  
 ![Formula](https://i.gyazo.com/6fb139baa01ffa90f1a78813cc394b4c.png)
@@ -48,7 +49,7 @@ ________________________________________________________________________________
   
 ### Task 1 (c) GuessingGame (Solution in GuessingGame.java)
 
-Program a guessing game inside a method rateNumber(). The program initially generates an int random 
+Program a guessing game inside a method *rateNumber()*. The program initially generates an int random 
 number between 0 and 100. Then the user should try to guess this number. The program outputs in each 
 case whether the number entered by the user is too large, too small, or correct. In the latter case the 
 program shall stop and output the number of guessing attempts output.
@@ -91,7 +92,7 @@ ________________________________________________________________________________
 
 ### Task 2 (a) (Solution in Sanduhr.java)
 
-Implement a method printSanduhr(int width) that prints an hourglass in the console. output. The size is to be specified 
+Implement a method *printSanduhr(int width)* that prints an hourglass in the console. output. The size is to be specified 
 by the width parameter. This sets the width of the first line in number of characters, where in each line the number of 
 characters decreases or and indented accordingly (see examples). 
 Test your program for width=3,4,9. The method should work for any value of width.
@@ -126,11 +127,11 @@ System.out.println("Result: " + result);
 ```
   
 Notes:
--The program creates a new task each time the getExercise() function is called.  
--The getExercise()function outputs the generated task to the console as follows:  
+-The program creates a new task each time the *getExercise()* method is called.  
+-The *getExercise()* method outputs the generated task to the console as follows:  
  Operand1 Operator Operand2 = ?  
  Examples: 13 * 8 = ? , 5 / 7 = ? , 20 + 1 = ?  
--A task is valid if the result is greater than 0. Invalid tasks are discarded in the function getExercise(), and a new random   
+-A task is valid if the result is greater than 0. Invalid tasks are discarded in the method *getExercise()*, and a new random   
 task is created directly before the before the method ends.  
   
   
