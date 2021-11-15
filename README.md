@@ -259,7 +259,7 @@ ________________________________________________________________________________
 
 Implement a method *removeFromList(int index)* for the class MyList, that removes the element of the array at index position. The length of the new array ist reduced by one.If the list is already empty before, the method does not perform the operation.
 
-Write an additional method *int removeDuplicates()*, which deletes multiple values. Return value is the of deleted entries.
+Write an additional method *int removeDuplicates()*, which deletes multiple values. Return value is number the of deleted entries.
 
 _________________________________________________________________________________________________________________________
   
