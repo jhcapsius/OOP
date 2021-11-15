@@ -44,7 +44,7 @@ public class MyList {
             System.out.println("Index out of bounce.\n");
             return this.array;
         
-        //attaches new element at the end     
+        //attaches new element at the end
         }else if(index == this.array.length){
             for(int i = 0; i < this.array.length; i++){
                 temp[i] = this.array[i];
@@ -216,5 +216,9 @@ public class MyList {
     
     public int getArrayLength(){
         return this.array.length;
+    }
+
+    public void setArray(int[] array){
+        this.array = array;
     }
 }
