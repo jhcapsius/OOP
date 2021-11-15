@@ -41,7 +41,7 @@ Output the solution to four decimal places in the console. The zeros are determi
 following formula :  
 ![Formula](https://i.gyazo.com/6fb139baa01ffa90f1a78813cc394b4c.png)
 
-Use the Math.sqrt() function from the Math class to calculate the root. Output only real solutions, 
+Use the *Math.sqrt()* method from the Math class to calculate the root. Output only real solutions, 
 i.e. no solutions where the root is less than zero.
   
 _________________________________________________________________________________________________________________________
@@ -61,7 +61,7 @@ For random number calculation, use the Math.random command, which generates doub
 int randomNumber = (int)(Math.random() * 101.0); 
 ```
 
-The input of the numbers via the console is done by the function nextInt() from the class scanner. This must 
+The input of the numbers via the console is done by the method *nextInt()* from the class scanner. This must 
 first be imported with import java.util.Scanner;
 
 ```Scanner sc = new Scanner(System.in);
