@@ -1,8 +1,6 @@
-import java.util.HashMap;
-
 public class Zahlenkombinationen {
     private int[][] array, maskHorizontal, maskVertical, maskDiagonal, maskMerge;
-    private HashMap<Integer, Integer> uniqueValues;
+    private String[][] arrayWithDeletedEntries;
     private int maxValue, row, column, valueCounter, currentValue, counterRow, counterColumn;
     
     public void initArray(int hoehe, int breite, int maxValue){
@@ -15,6 +13,7 @@ public class Zahlenkombinationen {
         }else{
             this.maxValue = maxValue;
             this.array = new int[hoehe][breite];
+            arrayWithDeletedEntries = new String[hoehe][breite];
             this.maskHorizontal = new int[hoehe][breite];
             this.maskVertical = new int[hoehe][breite];
             this.maskDiagonal = new int[hoehe][breite];
@@ -32,10 +31,7 @@ public class Zahlenkombinationen {
         setMaskVertical();
         setDiagonalMask();
         maskMerge();
-        
-
-        
-        
+        deleteEntries();   
     }
 
     private void setMaskHorizontal(){
@@ -253,6 +249,18 @@ public class Zahlenkombinationen {
         }
     }
 
+    private void deleteEntries(){
+        for(int i = 0; i < this.maskMerge.length; i++){
+            for (int k = 0; k < this.maskMerge[0].length; k++){
+                if(this.maskMerge[i][k] == -1){
+                    this.arrayWithDeletedEntries[i][k] = "-";
+                }else{
+                    this.arrayWithDeletedEntries[i][k] = Integer.toString(this.array[i][k]);
+                }
+            }
+        }
+    }
+
     
     public void printArr(){
         for(int i = 0; i < this.array.length; i++){
@@ -267,7 +275,17 @@ public class Zahlenkombinationen {
             System.out.println();
         }
         System.out.println();
-    }    
+    } 
+    
+    public void printDeletedArr(){
+        for(int i = 0; i < this.arrayWithDeletedEntries.length; i++){
+            for(int k = 0; k < this.arrayWithDeletedEntries[0].length; k++){
+                System.out.print(this.arrayWithDeletedEntries[i][k] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 
     public void printMerge(){
         for(int i = 0; i < this.maskMerge.length; i++){
@@ -280,6 +298,7 @@ public class Zahlenkombinationen {
             }
             System.out.println();
         }
+        System.out.println();
     }
 
     public void printHorizontal(){
@@ -323,6 +342,7 @@ public class Zahlenkombinationen {
         zahlenkombinationen.printVertical();
         zahlenkombinationen.printDiagonal();
         zahlenkombinationen.printMerge();
+        zahlenkombinationen.printDeletedArr();
     }
 
     
