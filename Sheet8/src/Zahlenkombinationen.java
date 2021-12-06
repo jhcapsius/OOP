@@ -191,7 +191,7 @@ public class Zahlenkombinationen {
                 }
 
                 if(conditionDiagonalFillMaskBottomToTop()){
-                    fillMaskDiagonalBottomToTop();
+                  fillMaskDiagonalBottomToTop();
                 }
 
                 this.row--;
@@ -201,6 +201,34 @@ public class Zahlenkombinationen {
             this.counterColumn++;
             this.column = this.counterColumn;
         }while(this.column < this.array[0].length);
+
+        this.row = this.array.length -2;
+        this.column = 0;
+        this.counterRow = 0;
+        do{
+            do{
+                if(this.column == 0){
+                    this.currentValue = this.array[this.row][this.column];
+                    this.valueCounter = 1;
+                }else if(this.array[this.row][this.column] == this.currentValue){
+                    this.valueCounter++;
+                }else{
+                    this.valueCounter = 1;
+                    this.currentValue = this.array[this.row][this.column];
+                }
+
+                if(conditionDiagonalFillMaskBottomToTop()){
+                    fillMaskDiagonalBottomToTop();
+                }
+                this.row--;
+                this.column++;
+            }while(this.row >= 0 && this.column < this.array[0].length);
+            this.column = 0;
+            this.counterRow--;
+            this.row = (this.array.length - 2) + this.counterRow;
+        }while(this.row >= 0);
+
+
     }
 
     private boolean conditionDiagonalFillMaskBottomToTop(){
@@ -225,22 +253,7 @@ public class Zahlenkombinationen {
         }
     }
 
-    private void resetLoop(){
-        this.valueCounter = 0;
-        this.row = 0;
-        this.column = 0;
-        
-    }
-
-    private void loopLowerHalf(){
-        this.valueCounter = 0;
-        this.row = 1;
-        this.column = 0;
-        
-
-    }
-
-
+    
     public void printArr(){
         for(int i = 0; i < this.array.length; i++){
             for(int k = 0; k < this.array[0].length; k++){
@@ -309,6 +322,7 @@ public class Zahlenkombinationen {
         zahlenkombinationen.printHorizontal();
         zahlenkombinationen.printVertical();
         zahlenkombinationen.printDiagonal();
+        zahlenkombinationen.printMerge();
     }
 
     
