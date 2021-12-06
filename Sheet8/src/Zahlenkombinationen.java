@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.awt.*;
+
 public class Zahlenkombinationen {
     private int[][] array, maskHorizontal, maskVertical, maskDiagonal, maskMerge;
     private int maxValue, row, column, valueCounter, currentValue, counterRow, counterColumn;
@@ -238,16 +241,37 @@ public class Zahlenkombinationen {
         for(int i = 0; i < this.maskMerge.length; i++){
             for (int k = 0; k < this.maskMerge[0].length; k++){
                 if(this.maskHorizontal[i][k] != 0 || this.maskVertical[i][k] != 0 || this.maskDiagonal[i][k] != 0){
-                    this.maskMerge[i][k] = -1;
+                    this.array[i][k] = -1;
                 }
             }
+        }
+    }
+
+    public void auffuellen(){
+        ArrayList<Point> elements = new ArrayList<>();
+        for(int i = 0; i < this.array[0].length; i++){
+            for(int k = 0; k < this.array.length; k++){
+                if(this.array[k][i] != -1){
+                    elements.add(new Point(k,i));
+                }
+            }
+            int counter = elements.size()-1;
+            for(int k = this.array.length - 1; k >= 0; k-- ){
+                if(counter > -1){
+                    this.array[k][i] = this.array[elements.get(counter).x][elements.get(counter).y];
+                }else{
+                    this.array[k][i] = -1;
+                }
+                counter--;
+            }
+            elements.clear();
         }
     }
     
     public void anzeigen(){
         for(int i = 0; i < this.array.length; i++){
             for(int k = 0; k < this.array[0].length; k++){
-                if(this.maskMerge[i][k] == -1){
+                if(this.array[i][k] == -1){
                     System.out.print("- " );
                 }else{
                     System.out.print(this.array[i][k] + " ");
@@ -263,6 +287,8 @@ public class Zahlenkombinationen {
         zahlenkombinationen.initArray(5, 7, 2);
         zahlenkombinationen.anzeigen();
         zahlenkombinationen.loeschen();
+        zahlenkombinationen.anzeigen();
+        zahlenkombinationen.auffuellen();
         zahlenkombinationen.anzeigen();
     }
 
