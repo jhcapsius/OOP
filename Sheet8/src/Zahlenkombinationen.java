@@ -104,6 +104,7 @@ public class Zahlenkombinationen {
 
     private void setDiagonalMask(){
         setDiagonalTopToBottom();
+        setDiagonalBottomToTop();
 
     }
 
@@ -173,8 +174,44 @@ public class Zahlenkombinationen {
 
     }
 
-    
+    private void setDiagonalBottomToTop(){
+        this.row = this.array.length - 1;
+        this.column = 0;
+        this.counterColumn = 0;
+        do{
+            do{
+                if(this.row == this.array.length -1){
+                    this.currentValue = this.array[this.row][this.column];
+                    this.valueCounter = 1;
+                }else if(this.array[this.row][this.column] == this.currentValue){
+                    this.valueCounter++;
+                }else{
+                    this.valueCounter = 1;
+                    this.currentValue = this.array[this.row][this.column];
+                }
 
+                if(conditionDiagonalFillMaskBottomToTop()){
+                    fillMaskDiagonalBottomToTop();
+                }
+
+                this.row--;
+                this.column++;
+            }while(this.row >= 0 && this.column < this.array[0].length);
+            this.row = this.array.length - 1;
+            this.counterColumn++;
+            this.column = this.counterColumn;
+        }while(this.column < this.array[0].length);
+    }
+
+    private boolean conditionDiagonalFillMaskBottomToTop(){
+        return this.valueCounter > 2 && (this.row-1 == -1 || this.column+1 == this.array[0].length || (this.row-1 < this.array.length && this.column+1 < this.array[0].length && this.array[this.row-1][this.column+1] != this.currentValue));
+    }
+
+    private void fillMaskDiagonalBottomToTop(){
+        for(int i = 0; i < this.valueCounter; i++){
+            this.maskDiagonal[this.row+i][this.column-i] = this.currentValue;
+        }
+    }
 
 
 
