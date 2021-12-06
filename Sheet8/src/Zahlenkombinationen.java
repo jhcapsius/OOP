@@ -258,52 +258,6 @@ public class Zahlenkombinationen {
         System.out.println();
     }
 
-    /*public void printMerge(){
-        for(int i = 0; i < this.maskMerge.length; i++){
-            for (int k = 0; k < this.maskMerge[0].length; k++){
-                if(this.maskMerge[i][k] == 0){
-                    System.out.print(" " + this.maskMerge[i][k] + " ");
-                }else{
-                    System.out.print(this.maskMerge[i][k] + " ");
-                }
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-    public void printHorizontal(){
-        for(int i = 0; i < this.maskHorizontal.length; i++){
-            for (int k = 0; k < this.maskHorizontal[0].length; k++){
-                System.out.print(this.maskHorizontal[i][k] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-    public void printVertical(){
-        System.out.println();
-        for(int i = 0; i < this.maskVertical.length; i++){
-            for (int k = 0; k < this.maskVertical[0].length; k++){
-                System.out.print(this.maskVertical[i][k] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }
-
-    public void printDiagonal(){
-        System.out.println();
-        for(int i = 0; i < this.maskDiagonal.length; i++){
-            for (int k = 0; k < this.maskDiagonal[0].length; k++){
-                System.out.print(this.maskDiagonal[i][k] + " ");
-            }
-            System.out.println();
-        }
-        System.out.println();
-    }*/
-
     public static void main(String[] args) {
         Zahlenkombinationen zahlenkombinationen = new Zahlenkombinationen();
         zahlenkombinationen.initArray(5, 7, 2);
