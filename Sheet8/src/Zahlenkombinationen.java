@@ -3,7 +3,7 @@ import java.util.HashMap;
 public class Zahlenkombinationen {
     private int[][] array, maskHorizontal, maskVertical, maskDiagonal, maskMerge;
     private HashMap<Integer, Integer> uniqueValues;
-    private int maxValue, row, column, valueCounter, currentValue;
+    private int maxValue, row, column, valueCounter, currentValue, counterRow, counterColumn;
     
     public void initArray(int hoehe, int breite, int maxValue){
         if(maxValue > 9 || maxValue < 1 ){
@@ -30,6 +30,7 @@ public class Zahlenkombinationen {
     public void loeschen(){
         setMaskHorizontal();
         setMaskVertical();
+        setDiagonalMask();
         maskMerge();
         
 
@@ -102,34 +103,75 @@ public class Zahlenkombinationen {
     }
 
     private void setDiagonalMask(){
+        setDiagonalTopToBottom();
 
     }
 
-    private void setDiagonalTopStartUpperHalf(){
+    private void setDiagonalTopToBottom(){
         this.row = 0;
         this.column = 0;
-
+        this.counterColumn = 0;
         do{
-            if(this.row == 0){
-                currentValue = this.array[this.row][this.column];
-                this.valueCounter = 1;
-            }else if(this.array[this.row][this.column] == this.currentValue){
-                this.valueCounter++;
-            }else{
-                this.valueCounter = 1;
-                this.currentValue = this.array[this.row][this.column];
-            }
+            do{
+                if(this.row == 0){
+                    currentValue = this.array[this.row][this.column];
+                    this.valueCounter = 1;
+                }else if(this.array[this.row][this.column] == this.currentValue){
+                    this.valueCounter++;
+                }else{
+                    this.valueCounter = 1;
+                    this.currentValue = this.array[this.row][this.column];
+                }
+    
+                if(conditionDiagonalFillMaskTopToBottom()){
+                    fillMaskDiagonalFromTopToBottom();
+                }
+                this.row++;
+                this.column++;
+            }while (this.row < this.array.length && this.column < this.array[0].length);
+            this.row = 0;
+            this.counterColumn++;
+            this.column = this.counterColumn;
+        }while(this.column < this.array[0].length);
 
-            
+        this.row = 1;
+        this.column = 0;
+        this.counterRow = 1;
+        do{
+            do{
+                if(this.column == 0){
+                    currentValue = this.array[this.row][this.column];
+                    this.valueCounter = 1;
+                }else if(this.array[this.row][this.column] == this.currentValue){
+                    this.valueCounter++;
+                }else{
+                    this.valueCounter = 1;
+                    this.currentValue = this.array[this.row][this.column];
+                }
 
-
-        }while (true);
+                if(conditionDiagonalFillMaskTopToBottom()){
+                    fillMaskDiagonalFromTopToBottom();
+                }
+                this.row++;
+                this.column++;
+            }while(this.row < this.array.length);
+            this.column = 0;
+            this.counterRow++;
+            this.row = this.counterRow;
+        }while(this.row < this.array.length);
+        
     }
 
-    private boolean conditionDiagonalFillMask(int i, int k, int currentvalue){
-        return true;
+    private boolean conditionDiagonalFillMaskTopToBottom(){
+        return this.valueCounter > 2 && (this.row+1 == this.array.length || this.column+1 == this.array[0].length || (this.row+1 < this.array.length && this.column+1 < this.array[0].length && this.array[this.row+1][this.column+1] != this.currentValue));
     }
 
+    private void fillMaskDiagonalFromTopToBottom(){
+        for(int i = 0; i < this.valueCounter; i++){
+            this.maskDiagonal[this.row-i][this.column-i] = this.currentValue;
+        }
+
+    }
 
     
 
@@ -229,6 +271,7 @@ public class Zahlenkombinationen {
         zahlenkombinationen.loeschen();
         zahlenkombinationen.printHorizontal();
         zahlenkombinationen.printVertical();
+        zahlenkombinationen.printDiagonal();
     }
 
     
