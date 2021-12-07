@@ -1,3 +1,10 @@
+/**
+ *The Zahlenkombinationen contains a private 2-D integer array that can be initialized using the initArray method and passing the height, width, and a maximum value between 0 and 10. With the loeschen method any chain of three or more horizontally, vertically or diagonally equal values can be deleted. The auffuellen method can be used to fill empty spaces in the array. The anzeigen methode can be used to display the array.
+ *
+ * @author Jan-Henrik Capsius
+ * @version 1.0
+ */
+
 import java.util.ArrayList;
 import java.awt.*;
 
@@ -5,6 +12,12 @@ public class Zahlenkombinationen {
     private int[][] array, maskHorizontal, maskVertical, maskDiagonal, maskMerge;
     private int maxValue, row, column, valueCounter, currentValue, counterRow, counterColumn;
     
+    /**
+     * Checks if the passed maximum value, height and width is valid. If they are not valid, an error message is displayed. Afterwards the arrays are initialized and the array is filled with randomly generated numbers between 1 and the max value
+     * @param hoehe number of rows of the array
+     * @param breite number of columns of the array
+     * @param maxValue biggest value in the array
+     */
     public void initArray(int hoehe, int breite, int maxValue){
         if(maxValue > 9 || maxValue < 1 ){
             System.out.println("max value invalid");
@@ -26,14 +39,24 @@ public class Zahlenkombinationen {
             }
         }
     }
-
+    /**
+     * Searches the rows, columns and diagonals for chains of 3 or more equal values and stores the position in the corresponding array. At the end the masks are merged with the original array and only single values or pairs remain. Catches a nullpointer exception when the arrays are not initalized.
+     */
     public void loeschen(){
-        setMaskHorizontal();
-        setMaskVertical();
-        setDiagonalMask();
-        maskMerge(); 
+        try{
+            setMaskHorizontal();
+            setMaskVertical();
+            setDiagonalMask();
+            maskMerge(); 
+        }catch(NullPointerException e){
+            System.out.println("The array must be initialized first");
+        }
+        
     }
 
+    /**
+     * Subfunction of loeschen. Searches for chains of 3 or more of the same values in the rows of the 2D array and stores them.
+     */
     private void setMaskHorizontal(){
         for(int i = 0; i < this.array.length; i++){
             for(int k = 0; k < this.array[0].length; k++){
@@ -54,9 +77,25 @@ public class Zahlenkombinationen {
             this.valueCounter = 0;
         }
     }
+
+    /**
+     * Checks if there is a number chain that should be saved
+     * @param i row index of the last element in the chain
+     * @param k column index of the last element in the chain
+     * @param currentValue value of the chain
+     * @return Returns true if there are 3 or more equal values in a row and it is the end of the row or the following value is different. 
+     */
+
     private boolean conditionHorizontalFillMask(int i, int k, int currentValue){
         return this.valueCounter > 2 && ((k+1 == this.array[0].length) || (k+1 < this.array[0].length && this.array[i][k+1] != currentValue));
     }
+
+
+    /**
+     * Subfunction of setMaskHorizontal. Stores the number chain  in the masking array of the rows.
+     * @param h row index of the last element in the chain
+     * @param k column index of the last element in the chain
+     */
 
     private void fillMaskHorizontal(int h, int k){
         for(int i = 0; i < this.valueCounter; i++){
@@ -65,6 +104,9 @@ public class Zahlenkombinationen {
 
     }
 
+     /**
+     * Subfunction of loeschen. Searches for chains of 3 or more of the same values in the columns of the 2D array and stores them.
+     */
     private void setMaskVertical(){
         for(int i = 0; i < this.array[0].length; i++){
             for(int k = 0; k < this.array.length; k++){
@@ -87,10 +129,24 @@ public class Zahlenkombinationen {
         
     }
 
+     /**
+     * Checks if there is a number chain that should be saved
+     * @param i row index of the last element in the chain
+     * @param k column index of the last element in the chain
+     * @param currentValue value of the chain
+     * @return Returns true if there are 3 or more equal values in a column and it is the end of the column or the following value is different. 
+     */
+
     private boolean conditionVerticalFillMask(int i, int k, int currentValue){
         return this.valueCounter > 2 && ((k+1 == this.array.length) || (k+1 < this.array.length && this.array[k+1][i] != currentValue));
     }
 
+    /**
+     * Subfunction of setMaskVertical. Stores the number chains in the masking array for the columns.
+     * @param h row index of the last element in the chain
+     * @param k column index of the last element in the chain
+     */
+    
     private void fillMaskVertical(int h, int k){
         for(int i = 0; i < this.valueCounter; i++){
             this.maskVertical[h-i][k] = this.array[h-i][k];
@@ -98,12 +154,18 @@ public class Zahlenkombinationen {
 
     }
 
+    /**
+     * Subfunction of loeschen. Searches for chains of 3 or more of the same values in the diagonals of the 2D array and stores them.
+     */
     private void setDiagonalMask(){
         setDiagonalTopToBottom();
         setDiagonalBottomToTop();
 
     }
 
+    /**
+     * Subfunction of setDiagonalMask. Searches for chains of 3 or more of the same values in the diagonals of the 2D array and stores them. The start point is i = 0 and k = 0
+     */
     private void setDiagonalTopToBottom(){
         this.row = 0;
         this.column = 0;
@@ -159,9 +221,23 @@ public class Zahlenkombinationen {
         
     }
 
+    /**
+     * Checks if there is a number chain that should be saved
+     * @param this.row row index of the last element in the chain
+     * @param this.collumn column index of the last element in the chain
+     * @param currentValue value of the chain
+     * @return Returns true if there are 3 or more equal values in a diagonal and it is the end of the diagonal or the following value is different. 
+     */
+
     private boolean conditionDiagonalFillMaskTopToBottom(){
         return this.valueCounter > 2 && (this.row+1 == this.array.length || this.column+1 == this.array[0].length || (this.row+1 < this.array.length && this.column+1 < this.array[0].length && this.array[this.row+1][this.column+1] != this.currentValue));
     }
+
+     /**
+     * Subfunction of setMaskDiagonal. Stores the number chains in the masking array for the doiagonals.
+     * @param this.row row index of the last element in the chain
+     * @param this.column column index of the last element in the chain
+     */
 
     private void fillMaskDiagonalFromTopToBottom(){
         for(int i = 0; i < this.valueCounter; i++){
@@ -170,6 +246,9 @@ public class Zahlenkombinationen {
 
     }
 
+    /**
+     * Subfunction of setDiagonalMask. Searches for chains of 3 or more of the same values in the diagonals of the 2D array and stores them. The start point is i = array.length-1 and k = 0
+     */
     private void setDiagonalBottomToTop(){
         this.row = this.array.length - 1;
         this.column = 0;
@@ -227,16 +306,31 @@ public class Zahlenkombinationen {
 
     }
 
+    /**
+     * Checks if there is a number chain that should be saved
+     * @param this.row row index of the last element in the chain
+     * @param this.collumn column index of the last element in the chain
+     * @param currentValue value of the chain
+     * @return Returns true if there are 3 or more equal values in a diagonal and it is the end of the diagonal or the following value is different. 
+     */
     private boolean conditionDiagonalFillMaskBottomToTop(){
         return this.valueCounter > 2 && (this.row-1 == -1 || this.column+1 == this.array[0].length || (this.row-1 < this.array.length && this.column+1 < this.array[0].length && this.array[this.row-1][this.column+1] != this.currentValue));
     }
 
+     /**
+     * Subfunction of setMaskDiagonal. Stores the number chains in the masking array for the doiagonals.
+     * @param this.row row index of the last element in the chain
+     * @param this.column column index of the last element in the chain
+     */
     private void fillMaskDiagonalBottomToTop(){
         for(int i = 0; i < this.valueCounter; i++){
             this.maskDiagonal[this.row+i][this.column-i] = this.currentValue;
         }
     }
 
+    /**
+     * Subfunction of loeschen. Merges the main array with the masks.
+     */
     private void maskMerge(){
         for(int i = 0; i < this.maskMerge.length; i++){
             for (int k = 0; k < this.maskMerge[0].length; k++){
@@ -247,51 +341,54 @@ public class Zahlenkombinationen {
         }
     }
 
+    /**
+     * fills the empty spaces in the array if values exist in the column
+     */
     public void auffuellen(){
-        ArrayList<Point> elements = new ArrayList<>();
-        for(int i = 0; i < this.array[0].length; i++){
-            for(int k = 0; k < this.array.length; k++){
-                if(this.array[k][i] != -1){
-                    elements.add(new Point(k,i));
+        try{
+            ArrayList<Point> elements = new ArrayList<>();
+            for(int i = 0; i < this.array[0].length; i++){
+                for(int k = 0; k < this.array.length; k++){
+                    if(this.array[k][i] != -1){
+                        elements.add(new Point(k,i));
+                    }
                 }
-            }
-            int counter = elements.size()-1;
-            for(int k = this.array.length - 1; k >= 0; k-- ){
-                if(counter > -1){
-                    this.array[k][i] = this.array[elements.get(counter).x][elements.get(counter).y];
-                }else{
-                    this.array[k][i] = -1;
+                int counter = elements.size()-1;
+                for(int k = this.array.length - 1; k >= 0; k-- ){
+                    if(counter > -1){
+                        this.array[k][i] = this.array[elements.get(counter).x][elements.get(counter).y];
+                    }else{
+                        this.array[k][i] = -1;
+                    }
+                    counter--;
                 }
-                counter--;
+                elements.clear();
             }
-            elements.clear();
+        }catch(NullPointerException e){
+            System.out.println("The array must be initialized first");
         }
+        
     }
     
+    /**
+     * Prints the array
+     */
     public void anzeigen(){
-        for(int i = 0; i < this.array.length; i++){
-            for(int k = 0; k < this.array[0].length; k++){
-                if(this.array[i][k] == -1){
-                    System.out.print("- " );
-                }else{
-                    System.out.print(this.array[i][k] + " ");
+        try{
+            for(int i = 0; i < this.array.length; i++){
+                for(int k = 0; k < this.array[0].length; k++){
+                    if(this.array[i][k] == -1){
+                        System.out.print("- " );
+                    }else{
+                        System.out.print(this.array[i][k] + " ");
+                    }
                 }
+                System.out.println();
             }
             System.out.println();
-        }
-        System.out.println();
-    }
-
-    public static void main(String[] args) {
-        Zahlenkombinationen zahlenkombinationen = new Zahlenkombinationen();
-        zahlenkombinationen.initArray(5, 7, 2);
-        zahlenkombinationen.anzeigen();
-        zahlenkombinationen.loeschen();
-        zahlenkombinationen.anzeigen();
-        zahlenkombinationen.auffuellen();
-        zahlenkombinationen.anzeigen();
-    }
-
-    
+        }catch(NullPointerException e){
+            System.out.println("The array must be initialized first");
+        }   
+    }   
     
 }
