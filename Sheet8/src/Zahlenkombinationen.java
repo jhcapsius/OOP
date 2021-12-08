@@ -6,11 +6,12 @@
  */
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.awt.*;
 
 public class Zahlenkombinationen {
-    private int[][] array, maskHorizontal, maskVertical, maskDiagonal, maskMerge;
-    private int maxValue, row, column, valueCounter, currentValue, counterRow, counterColumn;
+    private int[][] array, maskHorizontal, maskVertical, maskDiagonal;
+    private int row, column, valueCounter, currentValue, counterRow, counterColumn;
     
     /**
      * Checks if the passed maximum value, height and width is valid. If they are not valid, an error message is displayed. Afterwards the arrays are initialized and the array is filled with randomly generated numbers between 1 and the max value
@@ -18,7 +19,7 @@ public class Zahlenkombinationen {
      * @param breite number of columns of the array
      * @param maxValue biggest value in the array
      */
-    public void initArray(int hoehe, int breite, int maxValue){
+    public void initArray(int breite, int hoehe, int maxValue){
         if(maxValue > 9 || maxValue < 1 ){
             System.out.println("max value invalid");
         }else if(breite <= 0 || hoehe <= 0){
@@ -26,19 +27,38 @@ public class Zahlenkombinationen {
         }else if(breite == hoehe){
             System.out.println("Thats not a rectangle");
         }else{
-            this.maxValue = maxValue;
             this.array = new int[hoehe][breite];
             this.maskHorizontal = new int[hoehe][breite];
             this.maskVertical = new int[hoehe][breite];
             this.maskDiagonal = new int[hoehe][breite];
-            this.maskMerge = new int[hoehe][breite];
+            this.maskHorizontal = fillMasksWithMinus1(this.maskHorizontal);
+            this.maskVertical = fillMasksWithMinus1(this.maskVertical);
+            this.maskDiagonal = fillMasksWithMinus1(this.maskDiagonal);
+            Random rand = new Random();
             for(int i = 0; i < this.array.length; i++){
                 for(int k = 0; k < this.array[0].length; k++){
-                    this.array[i][k] = (int) (Math.random() * this.maxValue + 1);
+                    this.array[i][k] = rand.nextInt(maxValue+1);
                 }
             }
         }
     }
+
+    /**
+     * fills the given array with -1
+     * @param arr array with zeros
+     * @return array with -1
+     */
+    private int[][] fillMasksWithMinus1(int[][] arr){
+        for(int i = 0; i < arr.length; i++){
+            for(int k = 0; k < arr[0].length; k++){
+                arr[i][k] = -1;
+            }
+        }
+        return arr;
+    }    
+
+
+
     /**
      * Searches the rows, columns and diagonals for chains of 3 or more equal values and stores the position in the corresponding array. At the end the masks are merged with the original array and only single values or pairs remain. Catches a nullpointer exception when the arrays are not initalized.
      */
@@ -99,7 +119,7 @@ public class Zahlenkombinationen {
 
     private void fillMaskHorizontal(int h, int k){
         for(int i = 0; i < this.valueCounter; i++){
-            this.maskHorizontal[h][k-i] = this.array[h][k-i];
+            this.maskHorizontal[h][k-i] = this.currentValue;
         }
 
     }
@@ -149,7 +169,7 @@ public class Zahlenkombinationen {
     
     private void fillMaskVertical(int h, int k){
         for(int i = 0; i < this.valueCounter; i++){
-            this.maskVertical[h-i][k] = this.array[h-i][k];
+            this.maskVertical[h-i][k] = this.currentValue;
         }
 
     }
@@ -332,9 +352,9 @@ public class Zahlenkombinationen {
      * Subfunction of loeschen. Merges the main array with the masks.
      */
     private void maskMerge(){
-        for(int i = 0; i < this.maskMerge.length; i++){
-            for (int k = 0; k < this.maskMerge[0].length; k++){
-                if(this.maskHorizontal[i][k] != 0 || this.maskVertical[i][k] != 0 || this.maskDiagonal[i][k] != 0){
+        for(int i = 0; i < this.array.length; i++){
+            for (int k = 0; k < this.array[0].length; k++){
+                if(this.maskHorizontal[i][k] != -1 || this.maskVertical[i][k] != -1 || this.maskDiagonal[i][k] != -1){
                     this.array[i][k] = -1;
                 }
             }
@@ -390,5 +410,4 @@ public class Zahlenkombinationen {
             System.out.println("The array must be initialized first");
         }   
     }   
-    
 }
