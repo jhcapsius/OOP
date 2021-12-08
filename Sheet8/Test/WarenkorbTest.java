@@ -1,6 +1,18 @@
+/**
+ * Testclass for the shoppingcard class
+ * 
+ * @author Jan-Henrik Capsius
+ * @version 1.0
+ */
+
 public class WarenkorbTest {
     public static void main(String[] args) {
         Warenkorb warenkorb = new Warenkorb();
+
+        //test exception handling
+        warenkorb.removeItem(0);
+
+        //test add new items and print
         warenkorb.addItem(new Buch("Timothy Zahn", "Erben des Imperiums", 1991, 100001, 15));
         warenkorb.addItem(new Buch("Timothy Zahn", "Star Wars: Die dunkle Seite der Macht", 1992, 100002, 20));
         warenkorb.addItem(new Buch("Timothy Zahn", "Das letzte Kommando", 1993, 100003, 25));
@@ -9,7 +21,13 @@ public class WarenkorbTest {
         warenkorb.addItem(new DVD("Star Wars: Episode VI - Die Rückkehr der Jedi-Ritter", 131, 200003, 29));
         warenkorb.addItem(new Kleidung("T-Shirt", "blau", "M", 300003, 10));
         warenkorb.printContent();
-        warenkorb.printTotalPrice();
+        
+        
+        //test remove items
+        warenkorb.removeItem(0);
+        warenkorb.printContent();
+        
+
     }
     
 }
