@@ -22,7 +22,7 @@ public class DVD extends Artikel{
         this.minuten = dauer % 60;
     }
     /**
-     * //returns the attributes as string
+     * returns the attributes as string
      */
     @Override
     public String toString() {
