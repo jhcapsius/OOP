@@ -16,7 +16,7 @@ public class ZahlenkombinationenTest {
         System.out.println();
 
         //test fill array with random numbers between 1 and 4 and delete number chains of three or more.
-        zahlenkombinationen.initArray(5, 7, 4);
+        zahlenkombinationen.initArray(7, 5, 3);
         zahlenkombinationen.anzeigen();
         zahlenkombinationen.loeschen();
         zahlenkombinationen.anzeigen();
