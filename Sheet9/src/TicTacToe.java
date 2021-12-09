@@ -1,7 +1,7 @@
 
 
 public class TicTacToe {
-    private int[] feld = new int[9];
+    private int[] feld;
     private int turnCounter; 
 
     TicTacToe(){
@@ -11,9 +11,7 @@ public class TicTacToe {
     
 
     private void reset(){
-        for(int i = 0; i < this.feld.length; i++){
-            this.feld[i] = 0;
-        }
+        this.feld = new int[9];
         this.turnCounter = 1;
     }
 
@@ -78,34 +76,35 @@ public class TicTacToe {
     }
 
     public void zeigeSpielfeld(){
+        System.out.println("Spielfeld");
         for(int i = 0; i < this.feld.length; i++){
-            if(this.feld[i] == 1){
-                System.out.print("X");
-            }else if(this.feld[i] == 2){
-                System.out.print("0");
+            if( i>= 0 && i <2 || i>= 3 && i<5 || i>=6 && i< 8){
+                if(this.feld[i] == 1){
+                    System.out.print("X|");
+                }else if(this.feld[i] == 2){
+                    System.out.print("O|");
+                }else{
+                    System.out.print(" |");
+                }
+            }else if(i == 2 || i == 5){
+                if(this.feld[i] == 1){
+                    System.out.print("X");
+                }else if(this.feld[i] == 2){
+                    System.out.print("O");
+                }else{
+                    System.out.print(" ");
+                }
+                System.out.println("\n-+-+-");
             }else{
-                System.out.print(" ");
-            }
-            if(i + 1 != this.feld.length){
-                System.out.print(" | ");
+                if(this.feld[i] == 1){
+                    System.out.print("X");
+                }else if(this.feld[i] == 2){
+                    System.out.print("O");
+                }else{
+                    System.out.print(" ");
+                }
             }
         }
     }
 
-    public static void main(String[] args) {
-        TicTacToe ticTacToe = new TicTacToe();
-        ticTacToe.macheZug(0, 0);
-        ticTacToe.macheZug(0, 1);
-        ticTacToe.macheZug(0, 2);
-        ticTacToe.macheZug(1, 0);
-        ticTacToe.macheZug(1, 1);
-        ticTacToe.macheZug(1, 2);
-        ticTacToe.macheZug(2, 0);
-        ticTacToe.macheZug(2, 1);
-        ticTacToe.macheZug(2, 2);
-        ticTacToe.zeigeSpielfeld();
-        ticTacToe.macheZug(0,0);
-        ticTacToe.reset();
-        ticTacToe.zeigeSpielfeld();
-    }
 }
