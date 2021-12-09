@@ -10,56 +10,52 @@ public class TicTacToe {
 
     
 
-    private void reset(){
+    public void reset(){
         this.feld = new int[9];
         this.turnCounter = 1;
     }
 
     public void macheZug(int x, int y){
-        if(this.turnCounter <= 9){
-            if((x >= 0 || x <= 2) && (y >= 0 || y <= 2)){
-                if(x == 0){
-                    switch(y){
-                        case 0:
-                            setSign(0);
-                            break;
-                        case 1:
-                            setSign(1);
-                            break;
-                        case 2:
-                            setSign(2);
-                            break;        
-                    }
-                }else if(x == 1){
-                    switch(y){
-                        case 0:
-                            setSign(3);
-                            break;
-                        case 1:
-                            setSign(4);
-                            break;
-                        case 2:
-                            setSign(5);
-                            break;        
-                    }
-                }else if(x == 2){
-                    switch(y){
-                        case 0:
-                            setSign(6);
-                            break;
-                        case 1:
-                            setSign(7);
-                            break;
-                        case 2:
-                            setSign(8);
-                            break;        
-                    }
+        if((x >= 0 && x <= 2) && (y >= 0 && y <= 2)){
+            if(y == 0){
+                switch(x){
+                    case 0:
+                        setSign(0);
+                        break;
+                    case 1:
+                        setSign(1);
+                        break;
+                    case 2:
+                        setSign(2);
+                        break;        
                 }
-            }else{
-                System.out.println("\n\nUngültiger Zug");
+            }else if(y == 1){
+                switch(x){
+                    case 0:
+                        setSign(3);
+                        break;
+                    case 1:
+                        setSign(4);
+                        break;
+                    case 2:
+                        setSign(5);
+                        break;        
+                }
+            }else if(y == 2){
+                switch(x){
+                    case 0:
+                        setSign(6);
+                        break;
+                    case 1:
+                        setSign(7);
+                        break;
+                    case 2:
+                        setSign(8);
+                        break;        
+                }
             }
         }else{
-            System.out.println("\n\nFeld ist voll, bitte einen Reset vornehmen");
+            System.out.println("\nUngültiger Zug\n");
         }
     }
 
@@ -71,7 +67,7 @@ public class TicTacToe {
             this.feld[y] = 2;
             this.turnCounter++;
         }else{
-            System.out.println("Zelle ist bereits belegt");
+            System.out.println("Zelle ist bereits belegt\n");
         }
     }
 
@@ -105,6 +101,7 @@ public class TicTacToe {
                 }
             }
         }
+        System.out.println("\n");
     }
 
 }
