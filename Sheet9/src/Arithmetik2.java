@@ -12,6 +12,9 @@ public class Arithmetik2<T> {
         }catch(NullPointerException e){
             System.out.println("Rechenweg muss vorher bestimmt werden");
             return null;
+        }catch(IllegalArgumentException e){
+            System.out.println("Type wird nicht unterstützt");
+            return null;
         }
     }
 }
