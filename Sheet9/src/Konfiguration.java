@@ -12,6 +12,10 @@ public class Konfiguration {
     }
 
     public void schreibeKonfiguartion(){
-        
+
+    }
+
+    public void setWert(String key, String wert){
+        this.keyValuePaare.put(key, wert);
     }
 }
