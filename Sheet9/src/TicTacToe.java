@@ -1,4 +1,6 @@
-
+/**
+ * This class represents an implementation of the game TicTacToe. With the method macheZug the game fields can be occupied. The method zeigeSPielfeld displays the playfield on the terminal and with the reset method you can delete all entries and start the game again.
+ */
 
 public class TicTacToe {
     private int[] feld;
@@ -9,12 +11,20 @@ public class TicTacToe {
     }
 
     
-
+    /**
+     * resets the playing field
+     */
     public void reset(){
         this.feld = new int[9];
         this.turnCounter = 1;
     }
 
+
+    /**
+     * make a move and sets a sign at the given position
+     * @param x column
+     * @param y row
+     */
     public void macheZug(int x, int y){
         if((x >= 0 && x <= 2) && (y >= 0 && y <= 2)){
             if(y == 0){
@@ -59,6 +69,10 @@ public class TicTacToe {
         }
     }
 
+    /**
+     * subfunction for macheZug. sets an 1 for an odd number of moves and a 2 for an even number of moves. If a cell is already occupied, an error message is displayed.
+     * @param y position in the array
+     */
     private void setSign(int y){
         if(this.feld[y] == 0 && this.turnCounter % 2 != 0){
             this.feld[y] = 1;
@@ -71,6 +85,9 @@ public class TicTacToe {
         }
     }
 
+    /**
+     * prints the playing field on the terminal
+     */
     public void zeigeSpielfeld(){
         System.out.println("Spielfeld");
         for(int i = 0; i < this.feld.length; i++){

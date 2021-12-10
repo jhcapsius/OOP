@@ -1,5 +1,8 @@
 /**
- * Testclass for the tictactoe class
+ * Testclass for tictactoe
+ * 
+ * @author Jan-Henrik Capsius
+ * @version 1.0
  */
 
 public class TicTacToeTest {
