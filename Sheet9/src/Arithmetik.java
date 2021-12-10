@@ -1,20 +1,13 @@
-public class Arithmetik implements Rechenweg{
+public class Arithmetik{
     private Rechenweg rechnung;
 
 
-    
-
-    public double berechne(double a, double b){
-        return a;
+    public void bestimmeRechenweg(Rechenweg rechnung){
+        this.rechnung = rechnung;
     }
 
-
-
-
-    @Override
-    public double berechneErgebnis(double a, double b) {
-        // TODO Auto-generated method stub
-        return 0;
+    public double berechne(double a, double b){
+        return this.rechnung.berechneErgebnis(a, b);
     }
 
 }
