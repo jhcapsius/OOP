@@ -1,10 +1,17 @@
 import java.util.HashMap;
 
 public class Konfiguration {
+    private static final Konfiguration singletonKonfiguation = new Konfiguration();
+
     private HashMap<String, String> keyValuePaare;
 
-    public Konfiguration(){
+    private Konfiguration(){
+        System.out.println("Konfiguration wird erstellt.");
         this.keyValuePaare = new HashMap<>();
+    }
+
+    public static Konfiguration getKonfiguration(){
+        return singletonKonfiguation;
     }
 
     public HashMap<String, String> getWerte(){
