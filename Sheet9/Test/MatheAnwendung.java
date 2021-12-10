@@ -8,7 +8,7 @@
 public class MatheAnwendung {
     public static void main(String[] args) {
         Arithmetik arithmetik = new Arithmetik();
-        
+       
         //Test calculation way was not determined
         arithmetik.berechne(5, 5);
 
@@ -23,5 +23,6 @@ public class MatheAnwendung {
         //Test multiplication
         arithmetik.bestimmeRechenweg(new RechenwegMal());
         System.out.println(arithmetik.berechne(5, 5));
+  
     }
 }
