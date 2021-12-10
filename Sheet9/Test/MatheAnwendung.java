@@ -1,5 +1,5 @@
 /**
- * Testclass for Arithmetik class to test the calculationw ays
+ * Testclass for Arithmetik class to test the calculationw ways
  * 
  * @author Jan-Henrik Capsius
  * @version 1.0
