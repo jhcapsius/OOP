@@ -14,7 +14,7 @@ public class RechenwegMalGeneric<T> implements Rechenweg2<T> {
             return (T) ((Integer) ((Integer) a * (Integer) b));
         }else if(a instanceof Double){
             return (T) ((Double) ((Double) a * (Double) b));
-        }else if(a instanceof Integer){
+        }else if(a instanceof Float){
             return (T) ((Float) ((Float) a * (Float) b));
         }else if(a instanceof Long){
             return (T) ((Long) ((Long) a * (Long) b));
