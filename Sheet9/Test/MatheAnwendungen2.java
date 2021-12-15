@@ -16,16 +16,16 @@ public class MatheAnwendungen2 {
     //an example of an not allowed implementation
     Arithmetik2<String> arithmetikString = new Arithmetik2<>();
 
-    //Test calculation way not choosen
-    System.out.println("Testfall Rechenweg nicht ausgewählt");
-    arithmetikInteger.berechne(5, 5);
-    System.out.println();
-
     //test not allowed type
     System.out.println("Testfall Typ nicht erlaubt");
     arithmetikString.bestimmeRechenweg(new RechenwegPlusGeneric<>());
     System.out.println(arithmetikString.berechne("a", "b")+"\n");
-    
+
+    //Test calculation way not choosen
+    System.out.println("Testfall Rechenweg nicht ausgewählt");
+    arithmetikInteger.berechne(5, 5);
+    System.out.println();
+ 
     //Test addition
     System.out.println("Testfall Addition mit den erlaubten Typen");
     arithmetikInteger.bestimmeRechenweg(new RechenwegPlusGeneric<>());
