@@ -26,7 +26,9 @@ public class TicTacToe {
      * @param y row
      */
     public void macheZug(int x, int y){
-        if((x >= 0 && x <= 2) && (y >= 0 && y <= 2)){
+        if(this.turnCounter < 10){
+            System.out.println("Feld ist voll!");
+        }else if((x >= 0 && x <= 2) && (y >= 0 && y <= 2)){
             if(y == 0){
                 switch(x){
                     case 0:
