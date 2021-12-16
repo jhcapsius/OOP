@@ -1,7 +1,7 @@
 public class StackAdapter<T> implements IStackAdapter<T> {
     Stack<T> stack;
 
-    StackAdapter(){
+    StackAdapter() {
         this.stack = new Stack<>();
     }
 
@@ -25,5 +25,4 @@ public class StackAdapter<T> implements IStackAdapter<T> {
         return this.stack.peek();
     }
 
-    
 }
