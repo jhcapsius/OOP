@@ -26,20 +26,6 @@ public class TransportTest {
 
     }
 
-    public static Object setName(Object obj)throws Exception{
-        Class class1 = obj.getClass();
-        try{
-            Field name = class1.getField("name");
-            name.setAccessible(true);
-            name.set(class1, "Reflection");
-        }catch(Exception e){
-            System.out.println("There is no attribute named name");
-        }
-        
-        
-        return class1;
-    }
-
     public static void main(String[] args) throws Exception {
         Transport transport = new Transport("Flugzeug");
         Truck truck = new Truck("Truck");
