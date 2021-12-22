@@ -1,3 +1,7 @@
+/**
+ * Testclass for the StackAdapter, IStackAdapter and Stack class. Acts as the client that uses the Interface and the StackAdapter class to communicate with the Stack
+ */
+
 public class StackTest {
     public static void main(String[] args) {
         IStackAdapter<Integer> stackAdapter = new StackAdapter<>();
