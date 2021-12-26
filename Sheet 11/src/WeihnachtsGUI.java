@@ -2,51 +2,105 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class WeihnachtsGUI extends JFrame {
-    //frame resolution
+public class WeihnachtsGUI extends JFrame implements ActionListener {
+    // frame resolution
     private final int width = 1280;
     private final int height = 720;
-    //frame title
+    // frame title
     private final String title = "WeihnachtsGUI";
-    
-    //main panel
-    private JPanel backgroud;
-    
-    //christmas tree area panel
+
+    // main container
+    private Container container;
+
+    // christmas tree area
     private ChristmasTree christmasTree;
 
-    //menu panel right next to the christmas tree area
+    private JPanel backgroud;
+
+    // menu panel right next to the christmas tree area
     private JPanel menuPanel;
 
-    //panel for the christmas card label and textfield
+    // panel for the christmas card label and textfield
     private JPanel cardPanel;
 
-    //parameter panel
-    private JPanel parameterPanel;
+    // panel for the parameter
+    private JPanel paramPanel;
 
-    //christmascard label
+    private GridBagConstraints gbc;
+
+    // christmascard label
     private JLabel christmasCardLabel;
 
-    //status label
+    // status label
     private JLabel status;
 
-    //christmas card textfield for the name of the receiver
+    private JLabel errorDecoration;
+
+    // christmas card textfield for the name of the receiver
     private JTextField name;
 
-    //radio buttons for the christmas tree or a forest of christmas trees
+    // radio buttons for the christmas tree or a forest of christmas trees
     private JRadioButton christmasTreeRadioButton;
     private JRadioButton christmasTreeForestRadioButton;
 
-    //button group for the two radio buttons
+    // button group for the two radio buttons
     private ButtonGroup buttonGroup;
 
-    //checkbox for the decoration
+    // checkbox for the decoration
     private JCheckBox decoration;
 
-    //send button to confirm the inputs
+    // send button to confirm the inputs
     private JButton send;
 
-    WeihnachtsGUI(){
+    // status GUI
+    private boolean christmasTreeState;
+    private boolean christmasTreeForestState;
+    private boolean decorationState;
+
+    private class ChristmasTree extends JPanel {
+        private boolean christmasTreeState;
+        private boolean christmasTreeForestState;
+        private boolean decoration;
+
+        // resolution background
+        private final int widthPanel = 960;
+        private final int heigthPanel = 720;
+        // color background
+        private Color bgColor = new Color(0, 0, 0);
+
+        ChristmasTree() {
+            // init panel
+            this.setPreferredSize(new Dimension(this.widthPanel, this.heigthPanel));
+            this.christmasTreeState = false;
+            this.christmasTreeForestState = false;
+            this.decoration = false;
+        }
+
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponents(g);
+            g.setColor(bgColor);
+            g.fillRect(0, 0, this.widthPanel, this.heigthPanel);
+
+            if(this.christmasTreeState){
+                g.setColor(Color.GREEN);
+                g.fillRect(20, 20, 200, 200);
+            }
+        }
+
+        public void drawCard(boolean cts, boolean ctfs, boolean d){
+            setState(cts, ctfs, d);
+            repaint();
+        }
+
+        private void setState(boolean cts, boolean ctfs, boolean d){
+            this.christmasTreeState = cts;
+            this.christmasTreeForestState = ctfs;
+            this.decoration = d;
+        }
+    }
+
+    WeihnachtsGUI() {
         initComponents();
         addComponentsToMenuPanel();
         addComponentsToContainer();
@@ -54,8 +108,7 @@ public class WeihnachtsGUI extends JFrame {
 
     }
 
-
-    private void initComponents(){
+    private void initComponents() {
         initFrame();
         initChristmasTree();
         initPanel();
@@ -65,31 +118,51 @@ public class WeihnachtsGUI extends JFrame {
         initButtonGroup();
         initCheckbox();
         initButton();
-        
+
     }
 
-    private void addComponentsToContainer(){
+    private void addComponentsToContainer() {
         this.setContentPane(this.backgroud);
+        this.backgroud.add(this.christmasTree, BorderLayout.CENTER);
         this.backgroud.add(this.menuPanel, BorderLayout.EAST);
-        this.backgroud.add(this.christmasTree, BorderLayout.WEST);
         this.backgroud.add(this.status, BorderLayout.SOUTH);
-       
+
     }
 
-    private void addComponentsToMenuPanel(){
-        //adds card label and textfield to the card panel
+    private void addComponentsToMenuPanel() {
         this.cardPanel.add(this.christmasCardLabel);
         this.cardPanel.add(this.name);
 
-        //adds the christmas tree, forest and decoration button to the parameterpanel
-        this.parameterPanel.add(this.christmasTreeRadioButton);
-        this.parameterPanel.add(this.christmasTreeForestRadioButton);
-        this.parameterPanel.add(this.decoration);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.insets = new Insets(2, 0, 0, 2);
+        this.paramPanel.add(this.christmasTreeRadioButton, this.gbc);
+        gbc.gridy++;
+        gbc.weightx = 0.00001;
+        gbc.weighty = 0.00001;
+        this.paramPanel.add(this.christmasTreeForestRadioButton, this.gbc);
+        gbc.gridy++;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        this.paramPanel.add(this.decoration, this.gbc);
 
-        //adds the card panel, parameter panel and the send button to the menu panel
-        this.menuPanel.add(this.cardPanel, BorderLayout.NORTH);
-        this.menuPanel.add(this.parameterPanel, BorderLayout.CENTER);
-        this.menuPanel.add(this.send, BorderLayout.SOUTH);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.anchor = GridBagConstraints.NORTHWEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(2, 0, 0, 2);
+        gbc.weightx = 0.0000;
+        gbc.weighty = 0.0000;
+        this.menuPanel.add(this.cardPanel, gbc);
+        gbc.gridy++;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        this.menuPanel.add(this.paramPanel, gbc);
+        gbc.gridy++;
+        gbc.weightx = -1;
+        gbc.weighty = -1;
+        this.menuPanel.add(this.send, gbc);
     }
 
     private void initFrame() {
@@ -100,40 +173,43 @@ public class WeihnachtsGUI extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    private void initChristmasTree(){
+    private void initChristmasTree() {
         this.christmasTree = new ChristmasTree();
     }
 
-    private void initPanel(){
-        //init background panel
+    private void initPanel() {
+        this.gbc = new GridBagConstraints();
+
+        // init background panel
         this.backgroud = new JPanel();
         this.backgroud.setSize(this.width, this.height);
         this.backgroud.setLayout(new BorderLayout());
-        
-        //init menupanel
+
+        // init menupanel
         this.menuPanel = new JPanel();
-        this.menuPanel.setLayout(new BorderLayout());
+        this.menuPanel.setLayout(new GridBagLayout());
         this.menuPanel.setPreferredSize(new Dimension(320, 720));
 
-        //init cardpanel
+        // init cardpanel
         this.cardPanel = new JPanel();
 
-        //init parameterpanel
-        this.parameterPanel = new JPanel();
-        this.parameterPanel.setLayout(new GridLayout(0,1));
-        this.menuPanel.setPreferredSize(new Dimension(320, 50));
+        this.paramPanel = new JPanel();
+        this.paramPanel.setLayout(new GridBagLayout());
+        this.paramPanel.setPreferredSize(new Dimension(320, 320));
+        this.paramPanel.setBorder(BorderFactory.createTitledBorder("Parameter"));
+
     }
 
-    private void initLabel(){
+    private void initLabel() {
         this.christmasCardLabel = new JLabel("Weihnachtskarte fuer");
-        
         this.status = new JLabel("-");
+        this.errorDecoration = new JLabel("Vorher Tannenbaum oder Wald auswählen");
     }
 
-    private void initTextfield(){
-        this.name = new JTextField("Enter name");
-        this.name.setPreferredSize(new Dimension(150,20));
-        //removes the text from the textbox if you click at it
+    private void initTextfield() {
+        this.name = new JTextField("Name eingeben...");
+        this.name.setPreferredSize(new Dimension(150, 20));
+        // removes the text from the textbox if you click at it
         this.name.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -146,49 +222,73 @@ public class WeihnachtsGUI extends JFrame {
         });
     }
 
-    private void initRadioButton(){
+    private void initRadioButton() {
         this.christmasTreeRadioButton = new JRadioButton("Tannenbaum");
+        this.christmasTreeRadioButton.addActionListener(this);
         this.christmasTreeForestRadioButton = new JRadioButton("Wald");
+        this.christmasTreeForestRadioButton.addActionListener(this);
     }
 
-    private void initButtonGroup(){
+    private void initButtonGroup() {
         this.buttonGroup = new ButtonGroup();
         this.buttonGroup.add(this.christmasTreeRadioButton);
         this.buttonGroup.add(this.christmasTreeForestRadioButton);
     }
 
-    private void initCheckbox(){
+    private void initCheckbox() {
         this.decoration = new JCheckBox("Verzierung");
+        this.decoration.addActionListener(this);
     }
 
-    private void initButton(){
+    private void initButton() {
         this.send = new JButton("Send");
+        this.send.setSize(320, 20);
+        this.send.addActionListener(this);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == this.christmasTreeRadioButton) {
+            this.christmasTreeState = true;
+            this.christmasTreeForestState = false;
+            if (this.decorationState && this.christmasTreeState) {
+                this.status.setText("Tannenbaum mit Verzierung");
+            } else {
+                this.status.setText("Tannenbaum");
+            }
+        } else if (e.getSource() == this.christmasTreeForestRadioButton) {
+            this.christmasTreeState = false;
+            this.christmasTreeForestState = true;
+            if (this.decorationState && this.christmasTreeForestState) {
+                this.status.setText("Wald mit Verzierung");
+            } else {
+                this.status.setText("Wald");
+            }
+        } else if (e.getSource() == this.decoration) {
+            if (this.decorationState) {
+                this.decorationState = false;
+            } else {
+                this.decorationState = true;
+            }
 
+            if (!this.decorationState && this.christmasTreeState) {
+                this.status.setText("Tannenbaum");
+            } else if (!this.decorationState && this.christmasTreeForestState) {
+                this.status.setText("Wald");
+            }
 
-
-
-    private class ChristmasTree extends JPanel{
-        private int modus;
-        
-        //resolution background
-        private final int widthPanel = 960;
-        private final int heigthPanel = 720;
-        //color background
-        private final Color bgColor = new Color(0,0,0);
-
-        ChristmasTree(){
-            //init panel
-            this.setPreferredSize(new Dimension(this.widthPanel, this.heigthPanel));
-        }
-
-        @Override
-        public void paintComponent(Graphics g) {
-            super.paintComponents(g);
-            g.setColor(bgColor);
-            g.fillRect(0, 0, this.widthPanel, this.heigthPanel);
-
+            if (this.decorationState && this.christmasTreeState) {
+                this.status.setText("Tannenbaum mit Verzierung");
+            } else if (this.decorationState && this.christmasTreeForestState) {
+                this.status.setText("Wald mit Verzierung");
+            }
+        } else if (e.getSource() == this.send) {
+            this.christmasTree.drawCard(this.christmasTreeState, this.christmasTreeForestState, this.decorationState);
         }
     }
+
+    public static void main(String[] args) {
+        WeihnachtsGUI weihnachtsGUI = new WeihnachtsGUI();
+    }
+
 }
