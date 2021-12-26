@@ -9,11 +9,8 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
     // frame title
     private final String title = "WeihnachtsGUI";
 
-    // main container
-    private Container container;
-
     // christmas tree area
-    private ChristmasTree christmasTree;
+    private Leinwand leinwand;
 
     private JPanel backgroud;
 
@@ -33,8 +30,6 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
 
     // status label
     private JLabel status;
-
-    private JLabel errorDecoration;
 
     // christmas card textfield for the name of the receiver
     private JTextField name;
@@ -57,7 +52,7 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
     private boolean christmasTreeForestState;
     private boolean decorationState;
 
-    private class ChristmasTree extends JPanel {
+    private class Leinwand extends JPanel {
         private boolean christmasTreeState;
         private boolean christmasTreeForestState;
         private boolean decoration;
@@ -68,7 +63,7 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
         // color background
         private Color bgColor = new Color(0, 0, 0);
 
-        ChristmasTree() {
+        Leinwand() {
             // init panel
             this.setPreferredSize(new Dimension(this.widthPanel, this.heigthPanel));
             this.christmasTreeState = false;
@@ -123,7 +118,7 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
 
     private void addComponentsToContainer() {
         this.setContentPane(this.backgroud);
-        this.backgroud.add(this.christmasTree, BorderLayout.CENTER);
+        this.backgroud.add(this.leinwand, BorderLayout.CENTER);
         this.backgroud.add(this.menuPanel, BorderLayout.EAST);
         this.backgroud.add(this.status, BorderLayout.SOUTH);
 
@@ -174,7 +169,7 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
     }
 
     private void initChristmasTree() {
-        this.christmasTree = new ChristmasTree();
+        this.leinwand = new Leinwand();
     }
 
     private void initPanel() {
@@ -202,12 +197,14 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
 
     private void initLabel() {
         this.christmasCardLabel = new JLabel("Weihnachtskarte fuer");
+        this.christmasCardLabel.setToolTipText("Beschriftung des Textfeldes");
         this.status = new JLabel("-");
-        this.errorDecoration = new JLabel("Vorher Tannenbaum oder Wald auswählen");
+        this.status.setToolTipText("Zeigt die aktuelle Auswahl an.");
     }
 
     private void initTextfield() {
         this.name = new JTextField("Name eingeben...");
+        this.name.setToolTipText("Hier kann der Name der Person, fuer die die Karte ist, eingegeben werden");
         this.name.setPreferredSize(new Dimension(150, 20));
         // removes the text from the textbox if you click at it
         this.name.addMouseListener(new MouseAdapter() {
@@ -224,8 +221,10 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
 
     private void initRadioButton() {
         this.christmasTreeRadioButton = new JRadioButton("Tannenbaum");
+        this.christmasTreeRadioButton.setToolTipText("Zeichnet einen einzelnen Tannenbaum mittig der Karte");
         this.christmasTreeRadioButton.addActionListener(this);
         this.christmasTreeForestRadioButton = new JRadioButton("Wald");
+        this.christmasTreeForestRadioButton.setToolTipText("Zeichnet einen ganzen Wald bestehend aus Tannenbaeumen. Jeder Tannenbaum hat eine unterschiedliche Farbe, Position und Baumgroesse");
         this.christmasTreeForestRadioButton.addActionListener(this);
     }
 
@@ -237,11 +236,13 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
 
     private void initCheckbox() {
         this.decoration = new JCheckBox("Verzierung");
+        this.decoration.setToolTipText("Fuegt den Baeumen Baumschmuck und Baumstaemme hinzu. Außerdem wird ein Sternenhimmel erstellt");
         this.decoration.addActionListener(this);
     }
 
     private void initButton() {
         this.send = new JButton("Send");
+        this.send.setToolTipText("Bestaetigt die Auswahl und erstellt eine neue Karte");
         this.send.setSize(320, 20);
         this.send.addActionListener(this);
     }
@@ -278,12 +279,12 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
             }
 
             if (this.decorationState && this.christmasTreeState) {
-                this.status.setText("Tannenbaum mit Verzierung");
+                this.status.setText("Tannenbaum plus Verzierung");
             } else if (this.decorationState && this.christmasTreeForestState) {
-                this.status.setText("Wald mit Verzierung");
+                this.status.setText("Wald plus Verzierung");
             }
         } else if (e.getSource() == this.send) {
-            this.christmasTree.drawCard(this.christmasTreeState, this.christmasTreeForestState, this.decorationState);
+            this.leinwand.drawCard(this.christmasTreeState, this.christmasTreeForestState, this.decorationState);
         }
     }
 
