@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class WeihnachtsGUI extends JFrame implements ActionListener {
     // frame resolution
@@ -57,11 +58,38 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
         private boolean christmasTreeForestState;
         private boolean decoration;
 
+        // farb codes
+        private int r, g, b;
+
         // resolution background
         private final int widthPanel = 960;
         private final int heigthPanel = 720;
+
         // color background
-        private Color bgColor = new Color(0, 0, 0);
+        private final Color bgColor = new Color(0, 0, 0);
+
+        // christmas tree color
+        private final Color christmasTreeColor = new Color(34, 139, 34);
+
+        // log color
+        private final Color logColor = new Color(139, 69, 19);
+
+        // color star
+        private final Color starColor = new Color(255,255,255);
+
+        // christmas tree coordinates first
+        private final int[] treeX = { 450, 480, 510 };
+        private final int[] treeY = { 410, 360, 410 };
+
+        // forest start
+        private final int[] forestX = { 100, 130, 160 };
+        private final int[] forestY = { 350, 300, 350 };
+
+        // forest log start
+
+        // initial star coordianates
+        private final int[] starX = { 30, 45, 50, 55, 70, 55, 50, 45 };
+        private final int[] starY = { 30, 25, 10, 25, 30, 35, 50, 35 };
 
         Leinwand() {
             // init panel
@@ -74,21 +102,215 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
         @Override
         public void paintComponent(Graphics g) {
             super.paintComponents(g);
+
+            // draw background
             g.setColor(bgColor);
             g.fillRect(0, 0, this.widthPanel, this.heigthPanel);
 
-            if(this.christmasTreeState){
-                g.setColor(Color.GREEN);
-                g.fillRect(20, 20, 200, 200);
+            // draw tree with decoration
+            if (this.christmasTreeState && this.decoration) {
+                // draw christmas tree
+                g.setColor(this.christmasTreeColor);
+                g.fillPolygon(this.treeX, this.treeY, this.treeX.length);
+                g.fillPolygon(new int[] { this.treeX[0] - 10, this.treeX[1], this.treeX[2] + 10 },
+                        new int[] { this.treeY[0] + 25, this.treeY[1] + 25, this.treeY[2] + 25 }, this.treeX.length);
+                g.fillPolygon(new int[] { this.treeX[0] - 20, this.treeX[1], this.treeX[2] + 20 },
+                        new int[] { this.treeY[0] + 50, this.treeY[1] + 50, this.treeY[2] + 50 }, this.treeX.length);
+
+                // draw log
+                g.setColor(this.logColor);
+                g.fillRect(this.treeX[1] - 10, this.treeY[0] + 50, 20, 30);
+
+                // draw decoration
+                g.setColor(Color.RED);
+                g.fillOval(445, 408, 10, 10);
+                g.fillOval(505, 408, 10, 10);
+                g.fillOval(435, 433, 10, 10);
+                g.fillOval(515, 433, 10, 10);
+                g.fillOval(425, 458, 10, 10);
+                g.fillOval(525, 458, 10, 10);
+
+                // draw stars
+                int y;
+                int x;
+                int minX = 60;
+                int maxX = 90;
+                int minY = 45;
+                int maxY = 50;
+                g.setColor(this.starColor);
+                for (int i = 0; i < 3; i++) {
+                    for (int k = 0; k < 4; k++) {
+                        x = ThreadLocalRandom.current().nextInt(minX, maxX);
+                        y = ThreadLocalRandom.current().nextInt(minY, maxY);
+                        g.fillPolygon(
+                                new int[] { this.starX[0] + x, this.starX[1] + x, this.starX[2] + x,
+                                        this.starX[3] + x, this.starX[4] + x, this.starX[5] + x, this.starX[6] + x,
+                                        this.starX[7] + x },
+                                new int[] { this.starY[0] + y, this.starY[1] + y, this.starY[2] + y,
+                                        this.starY[3] + y, this.starY[4] + y, this.starY[5] + y, this.starY[6] + y,
+                                        this.starY[7] + y },
+                                this.starX.length);
+                        minX += 200;
+                        maxX += 250;
+                    }
+                    minX = 60;
+                    maxX = 90;
+                    minY += 45;
+                    maxY += 60;
+                }
+
+                // draw christmas forrest with decoration
+            } else if (this.christmasTreeForestState && this.decoration) {
+                int y;
+                int x;
+                // deviation of the position
+                int minX = -10;
+                int maxX = 10;
+                int minY = -10;
+                int maxY = 10;
+                // creates 10 trees with random position
+                for (int i = 0; i < 2; i++) {
+                    for (int k = 0; k < 5; k++) {
+                        // sets random color for each tree
+                        this.r = ThreadLocalRandom.current().nextInt(0, 255);
+                        this.g = ThreadLocalRandom.current().nextInt(0, 255);
+                        this.b = ThreadLocalRandom.current().nextInt(0, 255);
+                        Color treeColor = new Color(this.r, this.g, this.b);
+                        g.setColor(treeColor);
+
+                        // creares random position for each tree
+                        x = ThreadLocalRandom.current().nextInt(minX, maxX);
+                        y = ThreadLocalRandom.current().nextInt(minY, maxY);
+
+                        // draws the tree
+                        g.fillPolygon(new int[] { this.forestX[0] + x, this.forestX[1] + x, this.forestX[2] + x },
+                                new int[] { this.forestY[0] + y, this.forestY[1] + y, this.forestY[2] + y },
+                                this.forestY.length);
+                        g.fillPolygon(
+                                new int[] { this.forestX[0] - 10 + x, this.forestX[1] + x, this.forestX[2] + 10 + x },
+                                new int[] { this.forestY[0] + 25 + y, this.forestY[1] + 25 + y,
+                                        this.forestY[2] + 25 + y },
+                                this.forestY.length);
+                        g.fillPolygon(
+                                new int[] { this.forestX[0] - 20 + x, this.forestX[1] + x, this.forestX[2] + 20 + x },
+                                new int[] { this.forestY[0] + 50 + y, this.forestY[1] + 50 + y,
+                                        this.forestY[2] + 50 + y },
+                                this.forestY.length);
+
+                        // draws the log
+                        g.setColor(this.logColor);
+                        g.fillRect(this.forestX[1] - 10 + x, this.forestY[0] + 50 + y, 20, 30);
+
+                        // draws the decoration
+                        this.r = ThreadLocalRandom.current().nextInt(0, 255);
+                        this.g = ThreadLocalRandom.current().nextInt(0, 255);
+                        this.b = ThreadLocalRandom.current().nextInt(0, 255);
+                        Color decoColor = new Color(this.r,this.g,this.b);
+                        g.setColor(decoColor);
+                        g.fillOval(this.forestX[0]-5+x, this.forestY[0]-2+y, 10, 10);
+                        g.fillOval(this.forestX[02]-5+x, this.forestY[0]-2+y, 10, 10);
+                        g.fillOval(this.forestX[0]-10+x-5, this.forestY[0]+22+y, 10, 10);
+                        g.fillOval(this.forestX[02]+10+x-5, this.forestY[0]+22+y, 10, 10);
+                        g.fillOval(this.forestX[0]-20+x-5, this.forestY[0]+48+y, 10, 10);
+                        g.fillOval(this.forestX[02]+20+x-5, this.forestY[0]+48+y, 10, 10);
+
+                        minX += 160;
+                        maxX += 170;
+                    }
+                    minX = -10;
+                    maxX = 10;
+                    minY += 150;
+                    maxY += 200;
+                }
+
+                // draw stars
+                minX = 60;
+                maxX = 90;
+                minY = 45;
+                maxY = 50;
+                g.setColor(this.starColor);
+                for (int i = 0; i < 3; i++) {
+                    for (int k = 0; k < 4; k++) {
+                        x = ThreadLocalRandom.current().nextInt(minX, maxX);
+                        y = ThreadLocalRandom.current().nextInt(minY, maxY);
+                        g.fillPolygon(
+                                new int[] { this.starX[0] + x, this.starX[1] + x, this.starX[2] + x,
+                                        this.starX[3] + x, this.starX[4] + x, this.starX[5] + x, this.starX[6] + x,
+                                        this.starX[7] + x },
+                                new int[] { this.starY[0] + y, this.starY[1] + y, this.starY[2] + y,
+                                        this.starY[3] + y, this.starY[4] + y, this.starY[5] + y, this.starY[6] + y,
+                                        this.starY[7] + y },
+                                this.starX.length);
+                        minX += 200;
+                        maxX += 250;
+                    }
+                    minX = 60;
+                    maxX = 90;
+                    minY += 45;
+                    maxY += 60;
+                }
+            } else if (this.christmasTreeState) {
+
+                // draw tree
+                g.setColor(this.christmasTreeColor);
+                g.fillPolygon(this.treeX, this.treeY, 3);
+                g.fillPolygon(new int[] { this.treeX[0] - 10, this.treeX[1], this.treeX[2] + 10 },
+                        new int[] { this.treeY[0] + 25, this.treeY[1] + 25, this.treeY[2] + 25 }, this.treeX.length);
+                g.fillPolygon(new int[] { this.treeX[0] - 20, this.treeX[1], this.treeX[2] + 20 },
+                        new int[] { this.treeY[0] + 50, this.treeY[1] + 50, this.treeY[2] + 50 }, this.treeX.length);
+            }else if(this.christmasTreeForestState){
+                int y;
+                int x;
+                // deviation of the position
+                int minX = -10;
+                int maxX = 10;
+                int minY = -10;
+                int maxY = 10;
+                // creates 10 trees with random position
+                for (int i = 0; i < 2; i++) {
+                    for (int k = 0; k < 5; k++) {
+                        // sets random color for each tree
+                        this.r = ThreadLocalRandom.current().nextInt(0, 255);
+                        this.g = ThreadLocalRandom.current().nextInt(0, 255);
+                        this.b = ThreadLocalRandom.current().nextInt(0, 255);
+                        Color treeColor = new Color(this.r, this.g, this.b);
+                        g.setColor(treeColor);
+
+                        // creares random position for each tree
+                        x = ThreadLocalRandom.current().nextInt(minX, maxX);
+                        y = ThreadLocalRandom.current().nextInt(minY, maxY);
+
+                        // draws the tree
+                        g.fillPolygon(new int[] { this.forestX[0] + x, this.forestX[1] + x, this.forestX[2] + x },
+                                new int[] { this.forestY[0] + y, this.forestY[1] + y, this.forestY[2] + y },
+                                this.forestY.length);
+                        g.fillPolygon(
+                                new int[] { this.forestX[0] - 10 + x, this.forestX[1] + x, this.forestX[2] + 10 + x },
+                                new int[] { this.forestY[0] + 25 + y, this.forestY[1] + 25 + y,
+                                        this.forestY[2] + 25 + y },
+                                this.forestY.length);
+                        g.fillPolygon(
+                                new int[] { this.forestX[0] - 20 + x, this.forestX[1] + x, this.forestX[2] + 20 + x },
+                                new int[] { this.forestY[0] + 50 + y, this.forestY[1] + 50 + y,
+                                        this.forestY[2] + 50 + y },
+                                this.forestY.length);
+                        minX += 160;
+                        maxX += 170;
+                    }
+                    minX = -10;
+                    maxX = 10;
+                    minY += 150;
+                    maxY += 200;
+                }
             }
         }
 
-        public void drawCard(boolean cts, boolean ctfs, boolean d){
+        public void drawCard(boolean cts, boolean ctfs, boolean d) {
             setState(cts, ctfs, d);
             repaint();
         }
 
-        private void setState(boolean cts, boolean ctfs, boolean d){
+        private void setState(boolean cts, boolean ctfs, boolean d) {
             this.christmasTreeState = cts;
             this.christmasTreeForestState = ctfs;
             this.decoration = d;
@@ -224,7 +446,8 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
         this.christmasTreeRadioButton.setToolTipText("Zeichnet einen einzelnen Tannenbaum mittig der Karte");
         this.christmasTreeRadioButton.addActionListener(this);
         this.christmasTreeForestRadioButton = new JRadioButton("Wald");
-        this.christmasTreeForestRadioButton.setToolTipText("Zeichnet einen ganzen Wald bestehend aus Tannenbaeumen. Jeder Tannenbaum hat eine unterschiedliche Farbe, Position und Baumgroesse");
+        this.christmasTreeForestRadioButton.setToolTipText(
+                "Zeichnet einen ganzen Wald bestehend aus Tannenbaeumen. Jeder Tannenbaum hat eine unterschiedliche Farbe, Position und Baumgroesse");
         this.christmasTreeForestRadioButton.addActionListener(this);
     }
 
@@ -236,7 +459,8 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
 
     private void initCheckbox() {
         this.decoration = new JCheckBox("Verzierung");
-        this.decoration.setToolTipText("Fuegt den Baeumen Baumschmuck und Baumstaemme hinzu. Außerdem wird ein Sternenhimmel erstellt");
+        this.decoration.setToolTipText(
+                "Fuegt den Baeumen Baumschmuck und Baumstaemme hinzu. Außerdem wird ein Sternenhimmel erstellt");
         this.decoration.addActionListener(this);
     }
 
@@ -253,7 +477,7 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
             this.christmasTreeState = true;
             this.christmasTreeForestState = false;
             if (this.decorationState && this.christmasTreeState) {
-                this.status.setText("Tannenbaum mit Verzierung");
+                this.status.setText("Tannenbaum plus Verzierung");
             } else {
                 this.status.setText("Tannenbaum");
             }
@@ -261,7 +485,7 @@ public class WeihnachtsGUI extends JFrame implements ActionListener {
             this.christmasTreeState = false;
             this.christmasTreeForestState = true;
             if (this.decorationState && this.christmasTreeForestState) {
-                this.status.setText("Wald mit Verzierung");
+                this.status.setText("Wald plus Verzierung");
             } else {
                 this.status.setText("Wald");
             }
